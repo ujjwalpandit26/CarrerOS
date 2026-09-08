@@ -1,95 +1,160 @@
-# CareerOS 🚀
+# 🚀 CareerOS
 
-AI-powered career readiness and skill-gap analysis platform that evaluates a user's skills against a target career role and generates a personalized learning roadmap.
+### AI-Powered Career Readiness & Skill Gap Analysis Platform
 
-## Overview
+CareerOS is an AI-powered career guidance platform that helps users understand how prepared they are for a target career, identify missing skills, and follow a personalized learning roadmap.
 
-CareerOS helps users answer a simple question:
+The system analyzes a user's current skill profile against the requirements of a chosen career role and combines machine learning with rule-based career intelligence to generate actionable recommendations.
 
-> **"How ready am I for the career I want, and what should I learn next?"**
+---
 
-The system takes a user's current skill profile and desired career role, analyzes the gap between required and existing skills, predicts a career-readiness score using a machine learning model, and generates a personalized roadmap.
+## 📌 Project Overview
 
-## Key Features
+Choosing a career path is often difficult because users may not know:
 
-- 🎯 Career-role based skill analysis
-- 🔍 Skill gap detection
-- 🤖 Machine-learning based readiness prediction
-- 📊 Career readiness percentage
-- 🧭 Personalized weekly learning roadmap
-- 📚 Learning-resource recommendations
-- 💼 Career-level classification
-- 💰 Readiness-based salary estimation
-- 📈 Role-specific skill demand analysis
-- 🌐 FastAPI REST API
-- 📖 Interactive Swagger API documentation
+- Which skills are required for a particular role
+- Which skills they are currently missing
+- How prepared they are for the target role
+- What they should learn next
+- What career level they currently fall into
 
-## System Architecture
+**CareerOS addresses these problems through automated skill-gap analysis and readiness prediction.**
+
+### Core Workflow
 
 ```text
-                 User Skill Profile
-                         │
-                         ▼
-                  Target Career Role
-                         │
-                         ▼
-               ┌─────────────────────┐
-               │   Skill Gap Engine  │
-               └──────────┬──────────┘
-                          │
-              ┌───────────┴───────────┐
-              ▼                       ▼
-       Coverage Ratio            Average Skill
-                                  Weight
-              │                       │
-              └───────────┬───────────┘
-                          ▼
-                ┌──────────────────┐
-                │ ML Readiness     │
-                │ Prediction Model │
-                └─────────┬────────┘
-                          │
-                          ▼
-                  Readiness Score
-                          │
-          ┌───────────────┼────────────────┐
-          ▼               ▼                ▼
-     Missing Skills    Roadmap          Salary
-          │               │                │
-          ▼               ▼                ▼
-      Resources     Weekly Plan      Salary Band
+User Skill Profile
+        │
+        ▼
+   Target Career
+        │
+        ▼
+ Skill Gap Analysis
+        │
+        ├───────────────┐
+        ▼               ▼
+Coverage Ratio     Skill Strength
+        │               │
+        └───────┬───────┘
+                ▼
+       ML Readiness Model
+                │
+                ▼
+        Readiness Score
+                │
+       ┌────────┼─────────┐
+       ▼        ▼         ▼
+  Missing    Learning   Salary
+  Skills      Roadmap   Estimate
+       │
+       ▼
+ Learning Resources
+✨ Key Features
+🎯 Career-Specific Skill Analysis
 
-Machine Learning
+Compare a user's current skills against the expected skill set for a target role.
 
-CareerOS currently uses a Linear Regression model from scikit-learn to estimate career readiness.
+🔍 Skill Gap Detection
 
-Model Inputs
+Identify the skills that are missing or insufficient for the selected career.
 
-The current model uses two features:
+🤖 ML-Based Readiness Prediction
 
-coverage_ratio — proportion of required role skills the user has
-avg_weight — average importance/strength of the matched skills
-Model Output
+Use a trained machine learning model to estimate career readiness.
 
-The model predicts:
+📊 Readiness Score
 
-Readiness Score (%)
+Generate a percentage-based readiness score for the selected role.
 
-The model is trained using training_data.csv and saved as:
+🧭 Personalized Learning Roadmap
+
+Create a weekly roadmap based on the user's missing skills.
+
+📚 Learning Resources
+
+Provide recommended resources for developing missing skills.
+
+💼 Career Level Classification
+
+Classify users into:
+
+Beginner
+Intermediate
+Interview Ready
+💰 Salary Estimation
+
+Provide a readiness-based estimated salary range.
+
+📈 Role Skill Demand
+
+Show the importance of different skills for supported career roles.
+
+🌐 REST API
+
+CareerOS exposes its functionality through a FastAPI backend.
+
+📖 Interactive API Documentation
+
+Swagger/OpenAPI documentation is automatically available through FastAPI.
+
+🧠 Machine Learning
+
+CareerOS currently uses Linear Regression to predict career readiness.
+
+Input Features
+
+The current model uses two primary features:
+
+Feature	Description
+coverage_ratio	Proportion of required role skills possessed by the user
+avg_weight	Average strength/importance of the matched skills
+Model Pipeline
+User Skills
+     │
+     ▼
+Role Skill Requirements
+     │
+     ▼
+Skill Matching
+     │
+     ├── Coverage Ratio
+     │
+     └── Average Skill Weight
+              │
+              ▼
+       Linear Regression
+              │
+              ▼
+       Readiness Score
+
+The trained model is stored in:
 
 Backend/edu_navigator/readiness_model.pkl
-Model Evaluation
+📊 Model Evaluation
 
 The current implementation evaluates the model using:
 
 R² Score
 Mean Squared Error (MSE)
 
-Note: the current training dataset is synthetic. Therefore, the evaluation metrics measure performance on the generated dataset and should not be interpreted as real-world hiring or interview prediction accuracy.
+The current model achieves approximately:
 
-Supported Career Roles
+Metric	Result
+R² Score	0.929
+MSE	48.02
+RMSE	6.93
+MAE	5.56
+⚠️ Important Note
 
-CareerOS currently supports roles including:
+The current training dataset is synthetically generated.
+
+Therefore, these metrics indicate how well the model performs on the current generated dataset. They should not be interpreted as real-world hiring prediction accuracy.
+
+Future versions of CareerOS will incorporate more realistic career and job-market data to improve the reliability and usefulness of the readiness prediction.
+
+💼 Supported Career Roles
+
+CareerOS currently supports:
 
 ML Engineer
 Data Analyst
@@ -101,10 +166,12 @@ Cloud Engineer
 Business Analyst
 NLP Engineer
 Front End Developer
-Example Request
-Endpoint
+🔌 API
 POST /analyze
-Request Body
+
+Analyzes a user's skills for a selected target role.
+
+Example Request
 {
   "user_skills": {
     "Python": 0.8,
@@ -133,9 +200,16 @@ Example Response
     "Week 3": "Model Deployment",
     "Week 4": "CI/CD"
   },
+  "learning_resources": {
+    "Kubernetes": [
+      "Official Documentation for Kubernetes",
+      "YouTube Advanced Kubernetes Tutorial",
+      "Hands-on Project on Kubernetes"
+    ]
+  },
   "estimated_salary_band": "3-5 LPA (Entry Level)"
 }
-Project Structure
+🏗️ Project Structure
 CareerOS/
 │
 ├── Backend/
@@ -159,7 +233,21 @@ CareerOS/
 │
 ├── .gitignore
 └── README.md
-Getting Started
+⚙️ Tech Stack
+Backend
+Python
+FastAPI
+Pydantic
+Machine Learning
+Scikit-learn
+NumPy
+Pandas
+Joblib
+API
+REST API
+FastAPI
+Swagger / OpenAPI
+🚀 Getting Started
 1. Clone the repository
 git clone <YOUR_GITHUB_REPOSITORY_URL>
 cd CareerOS
@@ -172,47 +260,89 @@ macOS / Linux
 source venv/bin/activate
 4. Install dependencies
 pip install -r Backend/requirements.txt
-5. Start the FastAPI server
+5. Start the backend
 cd Backend
 uvicorn app:app --reload
 
-The API will be available at:
+The API will run at:
 
 http://127.0.0.1:8000
+📖 API Documentation
 
-Swagger API documentation:
+Once the server is running, open:
 
 http://127.0.0.1:8000/docs
-Current Technology Stack
-Backend
-Python
-FastAPI
-Pydantic
-Machine Learning
-scikit-learn
-NumPy
-Pandas
-Joblib
-API Documentation
-Swagger / OpenAPI
-Future Improvements
 
-CareerOS is being developed toward a more complete AI-driven career intelligence platform.
+This opens the interactive Swagger UI where you can test the CareerOS API directly from your browser.
+
+🔬 Current Limitations
+
+The current version of CareerOS is an initial ML-powered prototype.
+
+Current limitations include:
+Training data is synthetic
+Readiness prediction currently uses only two aggregated features
+Market-demand information is based on predefined role weights
+Salary estimation is rule-based
+Learning resources are currently predefined/generated
+Resume parsing is not yet implemented
+The current model does not directly predict interview or hiring outcomes
+
+These limitations are part of the ongoing development roadmap.
+
+🔮 Future Improvements
+
+CareerOS is designed to evolve into a more complete AI-driven career intelligence platform.
 
 Planned improvements include:
+📄 Resume parsing and skill extraction
+🧠 NLP-based resume analysis
+💼 Real-world job posting analysis
+📈 Real-time market skill trends
+🎯 Improved readiness prediction
+🤖 Model comparison and hyperparameter tuning
+💰 Data-driven salary prediction
+🛣️ Personalized career-path recommendations
+🎤 Interview readiness prediction
+📊 Advanced analytics dashboard
+🌐 Full-stack web application
+☁️ Cloud deployment
+🔄 Continuous model evaluation and monitoring
+🧩 Architecture
 
-Resume parsing and automatic skill extraction
-Real-world job-market data
-Job-description skill frequency analysis
-More meaningful career-readiness features
-Improved ML models and model comparison
-Personalized career recommendations
-Real-time market trends
-Better salary prediction using real-world data
-Interview-readiness prediction
-Frontend dashboard
-Model monitoring and evaluation
+The long-term architecture of CareerOS is designed around multiple intelligence layers:
 
-Disclaimer
+                    CareerOS
+                       │
+        ┌──────────────┼──────────────┐
+        ▼              ▼              ▼
+   Resume Engine   Job Market     User Profile
+        │              │              │
+        ▼              ▼              ▼
+  Skill Extraction  Skill Demand   Skill Levels
+        │              │              │
+        └──────────────┼──────────────┘
+                       ▼
+                Skill Gap Engine
+                       │
+                       ▼
+               Readiness Model
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+      Roadmap       Career Path   Salary
+          │            │            │
+          └────────────┼────────────┘
+                       ▼
+                Career Dashboard
+🎯 Project Goal
 
-Career-readiness and salary estimates are intended for educational and career-planning purposes and should not be considered guaranteed employment or compensation predictions.
+The long-term goal of CareerOS is to move beyond simple skill matching and become an intelligent career assistant that can answer:
+
+"Where am I right now, where do I want to go, what am I missing, and what should I do next?"
+
+⚠️ Disclaimer
+
+Career readiness and salary estimates are intended for educational and career-planning purposes.
+
+They should not be considered guaranteed predictions of employment, interview success, or compensation.
